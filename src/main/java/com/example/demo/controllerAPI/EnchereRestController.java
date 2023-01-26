@@ -1,6 +1,7 @@
 package com.example.demo.controllerAPI;
 
 
+import com.example.demo.ObjectBdd.ManipDb;
 import com.example.demo.connex.Connexion;
 import com.example.demo.dao.*;
 import com.example.demo.models.Enchere;
@@ -29,7 +30,7 @@ public class EnchereRestController {
     Connection con;
     {
         try {
-            con = ObjectBdd.ManipDb.pgConnect("postgres","railway","HwJ8BTFnHxRLJqalBGVa");
+            con = ManipDb.pgConnect("postgres","railway","HwJ8BTFnHxRLJqalBGVa");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

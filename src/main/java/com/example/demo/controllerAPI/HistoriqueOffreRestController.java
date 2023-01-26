@@ -1,6 +1,7 @@
 package com.example.demo.controllerAPI;
 
 
+import com.example.demo.ObjectBdd.ManipDb;
 import com.example.demo.connex.Connexion;
 import com.example.demo.dao.EnchereDao;
 import com.example.demo.dao.HistoriqueOffreDao;
@@ -25,7 +26,7 @@ public class HistoriqueOffreRestController {
     Connection con1;
     {
         try {
-            con1 = ObjectBdd.ManipDb.pgConnect("postgres","railway","HwJ8BTFnHxRLJqalBGVa");
+            con1 = ManipDb.pgConnect("postgres","railway","HwJ8BTFnHxRLJqalBGVa");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

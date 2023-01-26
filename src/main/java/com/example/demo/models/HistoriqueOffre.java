@@ -1,6 +1,8 @@
 package com.example.demo.models;
 
-public class HistoriqueOffre extends ObjectBdd.Mere {
+import com.example.demo.ObjectBdd.Mere;
+
+public class HistoriqueOffre extends Mere {
     private int idHistoriqueOffre;
     private int idEnchere;
     private int idUtilisateur;

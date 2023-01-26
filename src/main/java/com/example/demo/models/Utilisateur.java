@@ -1,9 +1,11 @@
 package com.example.demo.models;
 
+import com.example.demo.ObjectBdd.Mere;
+
 import java.sql.Date;
 
 
-public class Utilisateur extends ObjectBdd.Mere {
+public class Utilisateur extends Mere {
 
     private Integer Id;
     private String nom;

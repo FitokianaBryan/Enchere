@@ -1,6 +1,7 @@
 package com.example.demo.controllerVIEW;
 
 
+import com.example.demo.ObjectBdd.ManipDb;
 import com.example.demo.connex.Connexion;
 import com.example.demo.dao.AdminDao;
 import com.example.demo.dao.PrelevementEnchereDao;
@@ -21,7 +22,7 @@ public class AdministrateurController {
 
     Connexion con;
 
-    Connection con1 = ObjectBdd.ManipDb.pgConnect("postgres","railway","HwJ8BTFnHxRLJqalBGVa");
+    Connection con1 = ManipDb.pgConnect("postgres","railway","HwJ8BTFnHxRLJqalBGVa");
 
     PrelevementEnchereDao p = new PrelevementEnchereDao();
     AdminDao a = new AdminDao();

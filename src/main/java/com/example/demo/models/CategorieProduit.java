@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 
+import com.example.demo.ObjectBdd.Mere;
 import com.example.demo.connex.Connexion;
 
 import java.sql.Connection;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CategorieProduit extends ObjectBdd.Mere {
+public class CategorieProduit extends Mere {
 
     public Integer IdCategorieProduit;
     public String typeCategorie;

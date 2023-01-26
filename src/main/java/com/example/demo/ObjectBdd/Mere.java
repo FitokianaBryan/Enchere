@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ObjectBdd;
+package com.example.demo.ObjectBdd;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Mere {/* the models that all classes will inherits */
 
     public void insert(Connection con) throws Exception {
         if (con != null) {
-            PreparedStatement statement = ObjectBdd.ManipDb.createInsertStatement(this, con);
+            PreparedStatement statement = ManipDb.createInsertStatement(this, con);
             System.out.println(statement.toString());
             try {
                 statement.executeUpdate();
@@ -35,7 +35,7 @@ public class Mere {/* the models that all classes will inherits */
         if (con != null) {
             PreparedStatement statement = null;
             try {
-                statement = ObjectBdd.ManipDb.createSelfUpdateStatement(this, con, filter);
+                statement = ManipDb.createSelfUpdateStatement(this, con, filter);
                 System.out.println(statement.toString());
                 statement.executeUpdate();
             } catch (Exception e) {
@@ -58,7 +58,7 @@ public class Mere {/* the models that all classes will inherits */
         if (con != null) {
             PreparedStatement statement = null;
             try {
-                statement = ObjectBdd.ManipDb.createGeneralUpdateStatement(this, con, filtre);
+                statement = ManipDb.createGeneralUpdateStatement(this, con, filtre);
                 System.out.println(statement.toString());
                 statement.executeUpdate();
             } catch (Exception e) {
@@ -83,10 +83,10 @@ public class Mere {/* the models that all classes will inherits */
         if(con!=null){
             PreparedStatement statement = null;
             try{
-                statement = ObjectBdd.ManipDb.createSelectStatement(this, con, extra);
+                statement = ManipDb.createSelectStatement(this, con, extra);
                 System.out.println(statement.toString());
                 ResultSet res = statement.executeQuery();
-                Object[] result = ObjectBdd.ManipDb.fetchData(res, this.getClass());
+                Object[] result = ManipDb.fetchData(res, this.getClass());
                 if(result.length>0){
                     data = result[0];
                 }
@@ -110,10 +110,10 @@ public class Mere {/* the models that all classes will inherits */
         if(con!=null){
             PreparedStatement statement = null;
             try{
-                statement = ObjectBdd.ManipDb.createGeneralSelectStatement(this, con, extraCondition);
+                statement = ManipDb.createGeneralSelectStatement(this, con, extraCondition);
                 System.out.println(statement.toString());
                 ResultSet res = statement.executeQuery();
-                data = ObjectBdd.ManipDb.fetchData(res, this.getClass());
+                data = ManipDb.fetchData(res, this.getClass());
             }catch(Exception e){
                 e.printStackTrace();
                 throw e;
@@ -130,7 +130,7 @@ public class Mere {/* the models that all classes will inherits */
     }
 
     public  String getActualId(Connection con, Class selfClass) throws Exception{
-        return ObjectBdd.ManipDb.getActualId(selfClass.getSimpleName(), con);
+        return ManipDb.getActualId(selfClass.getSimpleName(), con);
     }
     
     
@@ -139,10 +139,10 @@ public class Mere {/* the models that all classes will inherits */
         if(con!=null){
             PreparedStatement statement = null;
             try{
-                statement = ObjectBdd.ManipDb.createGeneralSelectFromViewStatement(this, con, viewName,extraCondition);
+                statement = ManipDb.createGeneralSelectFromViewStatement(this, con, viewName,extraCondition);
                 System.out.println(statement.toString());
                 ResultSet res = statement.executeQuery();
-                data = ObjectBdd.ManipDb.fetchData(res, this.getClass());
+                data = ManipDb.fetchData(res, this.getClass());
             }catch(Exception e){
                 e.printStackTrace();
                 throw e;

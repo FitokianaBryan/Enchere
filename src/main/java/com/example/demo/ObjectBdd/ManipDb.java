@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ObjectBdd;
+package com.example.demo.ObjectBdd;
 
 /**
  *
@@ -48,7 +48,7 @@ public class ManipDb {/* this class is for all database manipulations */
     }
 
     public static PreparedStatement createInsertStatement(Object obj, Connection con) {
-        HashMap<String, Object> insertionValues = ObjectBdd.ManipClass.getInsertionValues(obj);
+        HashMap<String, Object> insertionValues = ManipClass.getInsertionValues(obj);
         String columnsValues = " values(";
         String columns = "(";
         String request = "Insert into " + obj.getClass().getSimpleName();
@@ -79,12 +79,12 @@ public class ManipDb {/* this class is for all database manipulations */
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ObjectBdd.ManipClass.fillStatement(sql, obj.getClass(), values);
+        ManipClass.fillStatement(sql, obj.getClass(), values);
         return sql;
     }
 
     public static PreparedStatement createSelfUpdateStatement(Object instance, Connection con, Object filter) {
-        HashMap<String, Object> updateValues = ObjectBdd.ManipClass.getInsertionValues(instance);
+        HashMap<String, Object> updateValues = ManipClass.getInsertionValues(instance);
         String request = "Update " + instance.getClass().getSimpleName() + " set ";
         Set<String> keys = updateValues.keySet();
         String[] attribNames = keys.toArray(new String[keys.size()]);
@@ -102,7 +102,7 @@ public class ManipDb {/* this class is for all database manipulations */
         if (request.endsWith(",")) {
             request = request.substring(0, request.lastIndexOf(",") - 1);
         }
-        List<Object> filtreValues = ObjectBdd.ManipClass.generateIdCondition(filter);
+        List<Object> filtreValues = ManipClass.generateIdCondition(filter);
         String conditionString = (String) filtreValues.get(0);
         Object[] conditionValues = (Object[]) filtreValues.get(1);
         request = request + conditionString;
@@ -118,12 +118,12 @@ public class ManipDb {/* this class is for all database manipulations */
     }
 
     public static void fillUpdateStatement(PreparedStatement statement, Object[] updateData, Object[] updateCondition) {
-        int nextIndex = ObjectBdd.ManipClass.fillUpdateData(statement, updateData);
-        ObjectBdd.ManipClass.fillUpdateCondition(statement, updateCondition, nextIndex);
+        int nextIndex = ManipClass.fillUpdateData(statement, updateData);
+        ManipClass.fillUpdateCondition(statement, updateCondition, nextIndex);
     }
 
     public static PreparedStatement createGeneralUpdateStatement(Object instance, Connection con, Object filtre) {
-        HashMap<String, Object> updateValues = ObjectBdd.ManipClass.getInsertionValues(instance);
+        HashMap<String, Object> updateValues = ManipClass.getInsertionValues(instance);
         String request = "Update " + instance.getClass().getSimpleName() + " set ";
         Set<String> keys = updateValues.keySet();
         String[] attribNames = keys.toArray(new String[keys.size()]);
@@ -138,7 +138,7 @@ public class ManipDb {/* this class is for all database manipulations */
                 data.add(updateValues.get(attribNames[i]));
             }
         }
-        List<Object> filtreValues = ObjectBdd.ManipClass.generateCondition(filtre);
+        List<Object> filtreValues = ManipClass.generateCondition(filtre);
         String conditionString = (String) filtreValues.get(0);
         Object[] conditionValues = (Object[]) filtreValues.get(1);
         PreparedStatement statement = null;
@@ -153,7 +153,7 @@ public class ManipDb {/* this class is for all database manipulations */
 
     public static PreparedStatement createSelectStatement(Object filtre, Connection con, String extra) {
         String request = "Select * from " + filtre.getClass().getSimpleName();
-        List<Object> filtreValues = ObjectBdd.ManipClass.generateCondition(filtre);
+        List<Object> filtreValues = ManipClass.generateCondition(filtre);
         String conditionString = (String) filtreValues.get(0);
         Object[] conditionValues = (Object[]) filtreValues.get(1);
         request += conditionString + extra;
@@ -161,7 +161,7 @@ public class ManipDb {/* this class is for all database manipulations */
         try {
             System.out.println(request);
             statement = con.prepareStatement(request);
-            ObjectBdd.ManipClass.fillInsertCondition(statement, conditionValues);
+            ManipClass.fillInsertCondition(statement, conditionValues);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,17 +169,17 @@ public class ManipDb {/* this class is for all database manipulations */
     }
 
     public static Object[] fetchData(ResultSet res, Class objClass) throws Exception {
-        HashMap<String, Class> attribInfo = ObjectBdd.ManipClass.getAttributes(objClass);
+        HashMap<String, Class> attribInfo = ManipClass.getAttributes(objClass);
         Set<String> keys = attribInfo.keySet();
         String[] attribNames = keys.toArray(new String[keys.size()]);
-        Method[] setters = ObjectBdd.ManipClass.getSetters(objClass, attribInfo);
+        Method[] setters = ManipClass.getSetters(objClass, attribInfo);
         Vector vec = new Vector<Object>();
         try {
             while (res.next()) {
                 Object newInstance = null;
                 Object[] rowValues = new Object[attribNames.length];
                 for (int i = 0; i < attribNames.length; i++) {
-                    rowValues[i] = ObjectBdd.ManipClass.fetchSqlData(res, attribInfo.get(attribNames[i]), attribNames[i]);
+                    rowValues[i] = ManipClass.fetchSqlData(res, attribInfo.get(attribNames[i]), attribNames[i]);
                 }
                 newInstance = toObject(rowValues, objClass, setters);
                 vec.add(newInstance);
@@ -197,7 +197,7 @@ public class ManipDb {/* this class is for all database manipulations */
         try {
             instance = objClass.newInstance();
             for (int i = 0; i < setters.length; i++) {
-                ObjectBdd.ManipClass.callSetter(instance, values[i], setters[i]);
+                ManipClass.callSetter(instance, values[i], setters[i]);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,7 +208,7 @@ public class ManipDb {/* this class is for all database manipulations */
     public static PreparedStatement createGeneralSelectStatement(Object filtre, Connection con,
             String extraConditition) {
         String request = "Select * from " + filtre.getClass().getSimpleName();
-        List<Object> filtreValues = ObjectBdd.ManipClass.generateCondition(filtre);
+        List<Object> filtreValues = ManipClass.generateCondition(filtre);
         String conditionString = (String) filtreValues.get(0);
         Object[] conditionValues = (Object[]) filtreValues.get(1);
         if (!conditionString.equals("")) {
@@ -225,7 +225,7 @@ public class ManipDb {/* this class is for all database manipulations */
         try {
             System.out.println(request);
             statement = con.prepareStatement(request);
-            ObjectBdd.ManipClass.fillInsertCondition(statement, conditionValues);
+            ManipClass.fillInsertCondition(statement, conditionValues);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,7 +244,7 @@ public class ManipDb {/* this class is for all database manipulations */
     public static PreparedStatement createGeneralSelectFromViewStatement(Object filtre, Connection con, String viewName,
             String extraCondition) {
         String request = "Select * from " + viewName;
-        List<Object> filtreValues = ObjectBdd.ManipClass.generateCondition(filtre);
+        List<Object> filtreValues = ManipClass.generateCondition(filtre);
         String conditionString = (String) filtreValues.get(0);
         Object[] conditionValues = (Object[]) filtreValues.get(1);
         if (!conditionString.equals("")) {
@@ -265,7 +265,7 @@ public class ManipDb {/* this class is for all database manipulations */
         try {
             System.out.println(request);
             statement = con.prepareStatement(request);
-            ObjectBdd.ManipClass.fillInsertCondition(statement, conditionValues);
+            ManipClass.fillInsertCondition(statement, conditionValues);
         } catch (Exception e) {
             e.printStackTrace();
         }

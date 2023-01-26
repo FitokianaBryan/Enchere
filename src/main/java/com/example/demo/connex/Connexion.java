@@ -13,10 +13,10 @@ public class Connexion
 
     protected static String url = "jdbc:postgresql://containers-us-west-47.railway.app:8060/railway";
     protected static String Username = "postgres";
-    protected static String DB = "railway";
+/*    protected static String DB = "railway";
     protected static String Host = "containers-us-west-47.railway.app";
 
-    protected static String Port = "8060";
+    protected static String Port = "8060";*/
     protected static String Password = "HwJ8BTFnHxRLJqalBGVa";
 
     public Connexion(String req)
